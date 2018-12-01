@@ -1,9 +1,8 @@
 import {request} from 'graphql-request'
+import { startServer } from '../../startServer';
+import { User } from '../../entity/User';
 
-import { host } from "./constants";
-import { User } from '../entity/User';
-import { createTypeormConn } from '../utils/createTypeormConnection';
-import { startServer } from '../startServer';
+
 
 let getHost = () => ''
 
@@ -23,7 +22,7 @@ mutation {
 `
 
 test("Register user", async () => {
-    const response = await request(host, mutation)
+    const response = await request(getHost(), mutation)
     expect(response).toEqual({register: true})
     const users = await User.find({where: {email}})
     expect(users).toHaveLength(1)
