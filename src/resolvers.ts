@@ -9,12 +9,11 @@ export const resolvers: ResolverMap = {
     Mutation: {
       register: async (_, {email, password}: GQL.IRegisterOnMutationArguments) => {
         const hashedPassword = await bcrypt.hash(password, 10)
-
         const user = User.create({
           email,
           password: hashedPassword
         })
-        
+        // Stuurt naar Postgres DB
         await user.save()
         return true
       }
